@@ -1,0 +1,9 @@
+main: me.mherzaqaryan.sponge.Sponge
+name: BedWars1058-Sponge
+author: Mher Zaqaryan
+version: ${project.version}
+description: BedWars1058 add-on that adds an effect when placing a sponge.
+load: STARTUP
+
+softdepend:
+  - BedWars1058
