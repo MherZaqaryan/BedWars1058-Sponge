@@ -16,7 +16,7 @@ public class SpongeAnimationTask extends BukkitRunnable {
     private final Location loc;
 
     private int radius = 1;
-    private float pitch = 1.7F;
+    private int pitch = 17;
 
     public SpongeAnimationTask(Block block) {
         this.block = block;
@@ -32,7 +32,7 @@ public class SpongeAnimationTask extends BukkitRunnable {
             return;
         }
         getParticles(loc, radius).forEach(loc -> Sponge.getParticleSupport().play(loc));
-        loc.getWorld().playSound(loc, Sound.valueOf(Sponge.getWoodClick()), 1.0F, pitch);
+        loc.getWorld().playSound(loc, Sound.valueOf(Sponge.getWoodClick()), 1.0F, pitch/10F);
         radius++;
         pitch++;
     }
