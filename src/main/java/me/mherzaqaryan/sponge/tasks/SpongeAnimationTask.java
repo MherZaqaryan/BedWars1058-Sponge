@@ -1,6 +1,7 @@
 package me.mherzaqaryan.sponge.tasks;
 
 import me.mherzaqaryan.sponge.Sponge;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -12,22 +13,36 @@ import java.util.List;
 
 public class SpongeAnimationTask extends BukkitRunnable {
 
-    private final Block block;
     private final Location loc;
 
     private int radius = 1;
     private int pitch = 17;
 
+    @SuppressWarnings("FieldCanBeLocal")
+    private final double WATER_RADIUS = 2.5;
+
     public SpongeAnimationTask(Block block) {
-        this.block = block;
         this.loc = block.getLocation();
+
+        for (double x = ( WATER_RADIUS*-1); x < WATER_RADIUS; x++) {
+            for (double y = ( WATER_RADIUS*-1); y < WATER_RADIUS; y++) {
+                for (double z = ( WATER_RADIUS*-1); z < WATER_RADIUS; z++) {
+                    Block water = block.getLocation().clone().add(x,y,z).getBlock();
+                    if (water.getType() == Material.WATER) {
+                        Bukkit.broadcastMessage("EEEEEE");
+                        water.setType(Material.AIR);
+                    }
+                }
+            }
+        }
+
+        block.setType(Material.AIR);
     }
 
     @Override
     public void run() {
         if (radius > 4) {
             cancel();
-            block.setType(Material.AIR);
             loc.getWorld().playSound(loc, Sound.valueOf(Sponge.getSplash()), 1, 1);
             return;
         }
