@@ -29,7 +29,6 @@ public class SpongeAnimationTask extends BukkitRunnable {
                 for (double z = ( WATER_RADIUS*-1); z < WATER_RADIUS; z++) {
                     Block water = block.getLocation().clone().add(x,y,z).getBlock();
                     if (water.getType() == Material.WATER) {
-                        Bukkit.broadcastMessage("EEEEEE");
                         water.setType(Material.AIR);
                     }
                 }
