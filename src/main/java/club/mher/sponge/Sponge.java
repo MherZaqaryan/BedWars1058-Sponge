@@ -1,16 +1,14 @@
-package me.mherzaqaryan.sponge;
+package club.mher.sponge;
 
+import club.mher.sponge.particle.ParticleSupport;
 import com.andrei1058.bedwars.api.BedWars;
 import lombok.Getter;
-import me.mherzaqaryan.sponge.listeners.SpongePlaceListener;
-import me.mherzaqaryan.sponge.metrics.Metrics;
-import me.mherzaqaryan.sponge.particle.ParticleSupport;
-import me.mherzaqaryan.sponge.particle.versions.Newer;
-import me.mherzaqaryan.sponge.particle.versions.Older;
+import club.mher.sponge.listeners.SpongePlaceListener;
+import club.mher.sponge.particle.versions.Newer;
+import club.mher.sponge.particle.versions.Older;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.logging.Level;
 
 public class Sponge extends JavaPlugin {
 
@@ -25,14 +23,18 @@ public class Sponge extends JavaPlugin {
     public void onEnable() {
         long start = System.currentTimeMillis();
         instance = this;
-        if (!setupBedwars()) return;
-        if (!setupParticle()) return;
+        if (!setupBedwars()) {
+            return;
+        }
+        if (!setupParticle()) {
+            return;
+        }
         bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
         new Metrics(this, 11788);
         Bukkit.getPluginManager().registerEvents(new SpongePlaceListener(), this);
         splash = bedWars.getForCurrentVersion("SPLASH", "ENTITY_PLAYER_SPLASH", "ENTITY_PLAYER_SPLASH");
         woodClick = bedWars.getForCurrentVersion("WOOD_CLICK", "BLOCK_WOOD_BUTTON_CLICK_ON", "BLOCK_WOODEN_BUTTON_CLICK_ON");
-        getLogger().log(Level.INFO, "Successfully loaded in " + (System.currentTimeMillis() - start) + "ms");
+        getLogger().info("Successfully loaded in " + (System.currentTimeMillis() - start) + "ms");
     }
 
     @Override
@@ -41,7 +43,9 @@ public class Sponge extends JavaPlugin {
     }
 
     private boolean setupBedwars() {
-        if (Bukkit.getPluginManager().isPluginEnabled("BedWars1058")) return true;
+        if (Bukkit.getPluginManager().isPluginEnabled("BedWars1058")) {
+            return true;
+        }
         getLogger().severe("BedWars1058 was not found. Disabling...");
         setEnabled(false);
         return false;

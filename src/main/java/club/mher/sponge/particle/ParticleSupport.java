@@ -1,4 +1,4 @@
-package me.mherzaqaryan.sponge.particle;
+package club.mher.sponge.particle;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

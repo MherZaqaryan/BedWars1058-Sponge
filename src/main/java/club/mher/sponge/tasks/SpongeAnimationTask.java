@@ -1,6 +1,6 @@
-package me.mherzaqaryan.sponge.tasks;
+package club.mher.sponge.tasks;
 
-import me.mherzaqaryan.sponge.Sponge;
+import club.mher.sponge.Sponge;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -13,14 +13,14 @@ import java.util.List;
 public class SpongeAnimationTask extends BukkitRunnable {
 
     private final Block block;
-    private final Location loc;
+    private final Location location;
 
     private int radius = 1;
     private int pitch = 17;
 
     public SpongeAnimationTask(Block block) {
         this.block = block;
-        this.loc = block.getLocation();
+        this.location = block.getLocation();
     }
 
     @Override
@@ -28,11 +28,13 @@ public class SpongeAnimationTask extends BukkitRunnable {
         if (radius > 4) {
             cancel();
             block.setType(Material.AIR);
-            loc.getWorld().playSound(loc, Sound.valueOf(Sponge.getSplash()), 1, 1);
+            location.getWorld().playSound(location, Sound.valueOf(Sponge.getSplash()), 1, 1);
             return;
         }
-        getParticles(loc, radius).forEach(loc -> Sponge.getParticleSupport().play(loc));
-        loc.getWorld().playSound(loc, Sound.valueOf(Sponge.getWoodClick()), 1.0F, pitch/10F);
+        for (Location particle : getParticles(location, radius)) {
+            Sponge.getParticleSupport().play(particle);
+        }
+        location.getWorld().playSound(location, Sound.valueOf(Sponge.getWoodClick()), 1.0F, pitch/10F);
         radius++;
         pitch++;
     }
