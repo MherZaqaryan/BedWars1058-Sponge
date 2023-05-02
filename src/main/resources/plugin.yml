@@ -1,9 +1,11 @@
-main: me.mherzaqaryan.sponge.Sponge
-name: BedWars1058-Sponge
-author: Mher Zaqaryan
-version: ${project.version}
-description: BedWars1058 add-on that adds an effect when placing a sponge.
-load: STARTUP
+name: "BedWars1058-Sponge"
+main: "club.mher.sponge.Sponge"
+
+version: "${project.version}"
+author: "Mher Zaqaryan"
+
+description: "BedWars1058 Sponge addon that plays an effect when placing a sponge."
+api-version: "1.13"
 
 softdepend:
-  - BedWars1058
+  - "BedWars1058"
