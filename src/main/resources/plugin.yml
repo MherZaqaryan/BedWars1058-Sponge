@@ -9,3 +9,4 @@ api-version: "1.13"
 
 softdepend:
   - "BedWars1058"
+  - "BedWars2023"

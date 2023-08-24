@@ -1,7 +1,9 @@
 package club.mher.sponge;
 
+import club.mher.sponge.support.BW1058;
+import club.mher.sponge.support.BW2023;
+import club.mher.sponge.support.IBedWars;
 import club.mher.sponge.particle.ParticleSupport;
-import com.andrei1058.bedwars.api.BedWars;
 import lombok.Getter;
 import club.mher.sponge.listeners.SpongePlaceListener;
 import club.mher.sponge.particle.versions.Newer;
@@ -13,7 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Sponge extends JavaPlugin {
 
     @Getter private static Sponge instance;
-    @Getter private static BedWars bedWars;
+    @Getter private static IBedWars bedWars;
     @Getter private static ParticleSupport particleSupport;
     @Getter private static String splash, woodClick;
 
@@ -29,7 +31,11 @@ public class Sponge extends JavaPlugin {
         if (!setupParticle()) {
             return;
         }
-        bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
+        if (Bukkit.getPluginManager().isPluginEnabled("BedWars1058")){
+            bedWars = new BW1058();
+        } else if (Bukkit.getPluginManager().isPluginEnabled("BedWars2023")){
+            bedWars = new BW2023();
+        }
         new Metrics(this, 11788);
         Bukkit.getPluginManager().registerEvents(new SpongePlaceListener(), this);
         splash = bedWars.getForCurrentVersion("SPLASH", "ENTITY_PLAYER_SPLASH", "ENTITY_PLAYER_SPLASH");
@@ -46,7 +52,10 @@ public class Sponge extends JavaPlugin {
         if (Bukkit.getPluginManager().isPluginEnabled("BedWars1058")) {
             return true;
         }
-        getLogger().severe("BedWars1058 was not found. Disabling...");
+        if (Bukkit.getPluginManager().isPluginEnabled("BedWars2023")) {
+            return true;
+        }
+        getLogger().severe("BedWars1058 or BedWars2023 was not found. Disabling...");
         setEnabled(false);
         return false;
     }

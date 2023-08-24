@@ -14,7 +14,7 @@ public class SpongePlaceListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onSpongePlace(BlockPlaceEvent e) {
         Player player = e.getPlayer();
-        if (!Sponge.getBedWars().getArenaUtil().isPlaying(player)) {
+        if (!Sponge.getBedWars().isPlaying(player)) {
             return;
         }
         Block block = e.getBlock();
